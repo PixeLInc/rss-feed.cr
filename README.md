@@ -9,7 +9,7 @@ Add this to your application's `shard.yml`:
 ```yaml
 dependencies:
   rss_feed_emitter:
-    github: ga2mer/rss_feed_emitter
+    github: ga2mer/rss_feed_emitter.cr
 ```
 
 ## Usage
