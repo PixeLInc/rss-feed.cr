@@ -1,0 +1,9 @@
+name: rss_feed_emitter
+version: 0.1.0
+
+authors:
+  - Nikita Savyolov <ga2mer@yandex.ru>
+
+crystal: 0.21.1
+
+license: MIT
