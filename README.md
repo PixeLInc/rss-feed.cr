@@ -1,4 +1,4 @@
-# rss_feed_emitter
+# RSS Feed Emitter
 
 RSS feed aggregator. Crystal implementation of [filipedeschamps/rss-feed-emitter](https://github.com/filipedeschamps/rss-feed-emitter)
 
@@ -9,7 +9,7 @@ Add this to your application's `shard.yml`:
 ```yaml
 dependencies:
   rss_feed_emitter:
-    github: ga2mer/rss_feed_emitter.cr
+    github: ga2mer/rss-feed-emitter.cr
 ```
 
 ## Usage
