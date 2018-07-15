@@ -34,9 +34,9 @@ module RSSFeedEmitter
           item["guid"] = field.as(XML::Node).text.as(String)
         end
 
-        field = c.xpath_node("creator")
+        field = c.children.find { |c| c.name == "creator" }.try &.content
         if field
-          item["creator"] = field.as(XML::Node).text.as(String)
+          item["creator"] = field
         end
 
         item
