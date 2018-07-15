@@ -1,7 +1,7 @@
-require "./rss_feed_emitter/*"
+require "./rss_feed/*"
 require "http/client"
 
-module RSSFeedEmitter
+module RSSFeeder
   class Feed
     @read_posts = [] of String
     @parser = Parser.new

@@ -1,6 +1,6 @@
 require "xml"
 
-module RSSFeedEmitter
+module RSSFeeder
   struct Item
     getter data : Hash(String, String)
 

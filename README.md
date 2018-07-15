@@ -1,6 +1,6 @@
 # RSS Feed Emitter
 
-RSS feed aggregator. Crystal implementation of [filipedeschamps/rss-feed-emitter](https://github.com/filipedeschamps/rss-feed-emitter)
+An rss feed aggregator based on/rewritten of https://github.com/ga2mer/rss-feed-emitter.cr
 
 ## Installation
 
@@ -8,39 +8,23 @@ Add this to your application's `shard.yml`:
 
 ```yaml
 dependencies:
-  rss_feed_emitter:
-    github: ga2mer/rss-feed-emitter.cr
+  rss_feed:
+    github: pixelinc/rss-feed.cr
 ```
 
 ## Usage
 
 ```crystal
-require "rss_feed_emitter"
+require "rss_feed"
 
-# create feeder
-feeder = RSSFeedEmitter::Feeder.new
-
-# add rss feed
-feeder.add "http://127.0.0.1:9998"
-
-# listening new items
-feeder.new_item do |item|
-    puts item
+RSSFeeder::Feed.new("url", refresh_interval: 5) do |item|
+  puts item.title
 end
-
-# Not necessary if your app does not closing
-feeder.start
 ```
-
-TODO: Write usage instructions here
-
-## Development
-
-TODO: Write development instructions here
 
 ## Contributing
 
-1. Fork it ( https://github.com/ga2mer/rss_feed_emitter/fork )
+1. Fork it ( https://github.com/pixelinc/rss-feed.cr/fork )
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
@@ -48,4 +32,5 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [ga2mer](https://github.com/ga2mer) Nikita Savyolov - creator, maintainer
+- [PixeLInc](https://github.com/pixelinc) PixeLInc - maintainer
+- [ga2mer](https://github.com/ga2mer) Nikita Savyolov - original creator
