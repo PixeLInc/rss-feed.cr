@@ -1,9 +1,10 @@
-name: rss_feed_emitter
+name: rss_feed
 version: 0.1.0
 
 authors:
+  - PixeLInc <officialpixelinc@gmail.com>
   - Nikita Savyolov <ga2mer@yandex.ru>
 
-crystal: 0.21.1
+crystal: 0.25.1
 
 license: MIT
