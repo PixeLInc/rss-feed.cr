@@ -5,31 +5,32 @@ module RSSFeedEmitter
   class Feeder
     @feed_list = [] of Feed
     @history_length_multiplier = 3
+
     def add(url : String, refresh : Int32 = 60)
       @feed_list << Feed.new self, url, refresh
     end
 
-    def new_item(&block : Hash(String, String)->)
+    def new_item(&block : Hash(String, String) ->)
       @new_item_callback = block
     end
 
-    def list()
+    def list
       @feed_list
     end
 
     def remove(url : String)
-      feed = @feed_list.find {|x| x.@url == url }
+      feed = @feed_list.find { |x| x.@url == url }
       if feed
         @feed_list.delete feed
         feed.delete
       end
     end
 
-    def destroy()
-      @feed_list.each {|feed| remove feed.@url}
+    def destroy
+      @feed_list.each { |feed| remove feed.@url }
     end
 
-    def start()
+    def start
       sleep
     end
   end
@@ -41,7 +42,7 @@ module RSSFeedEmitter
     @deleted = false
 
     def initialize(@feed : Feeder, @url : String, @refresh : Int32 = 60)
-        run
+      run
     end
 
     def delete
@@ -49,7 +50,7 @@ module RSSFeedEmitter
     end
 
     def find_item(items, item)
-      @items.find {|x| 
+      @items.find { |x|
         if x["guid"]?
           x["guid"]? == item["guid"]?
         elsif x["title"]? && x["link"]?
@@ -58,7 +59,7 @@ module RSSFeedEmitter
       }
     end
 
-    def run()
+    def run
       spawn do
         if !@deleted
           begin
@@ -66,13 +67,13 @@ module RSSFeedEmitter
             if !res.body.empty?
               items = @parser.get_items res.body
               @max_history_length = items.size * @feed.@history_length_multiplier
-              newItems = items.select {|item| 
+              newItems = items.select { |item|
                 i = find_item items, item
                 if !i
                   @items << item
                   @items = @items.last @max_history_length
                   spawn do
-                  @feed.@new_item_callback.try &.call item
+                    @feed.@new_item_callback.try &.call item
                   end
                 end
               }
