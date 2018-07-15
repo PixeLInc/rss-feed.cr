@@ -1,46 +1,50 @@
 require "xml"
 
 module RSSFeedEmitter
+  struct Item
+    getter data : Hash(String, String)
+
+    def initialize(@data : Hash(String, String))
+    end
+
+    def title
+      @data["title"]
+    end
+
+    def guid
+      @data["guid"]
+    end
+
+    def description
+      @data["description"]
+    end
+
+    def link
+      @data["link"]
+    end
+  end
+
   class Parser
-    def get_items(xml : String)
-      doc = XML.parse xml
-      items = doc.xpath("//rss/channel/item").as(XML::NodeSet)
+    def get_items(body : String)
+      data = get_data(body)
 
-      items.map { |c|
-        item = {} of String => String
+      parse(data)
+    end
 
-        field = c.xpath_node("title")
-        if field
-          item["title"] = field.as(XML::Node).text.as(String)
+    def get_data(xml_data : String)
+      XML.parse xml_data
+    end
+
+    def parse(xml : XML::Node)
+      items = xml.xpath("//rss/channel/item").as(XML::NodeSet)
+      data = {} of String => String
+      items.map do |node|
+        node.children.each do |child|
+          data[child.name] = child.text
         end
 
-        field = c.xpath_node("link")
-        if field
-          item["link"] = field.as(XML::Node).text.as(String)
-        end
-
-        field = c.xpath_node("pubDate")
-        if field
-          item["pubDate"] = field.as(XML::Node).text.as(String)
-        end
-
-        field = c.xpath_node("description")
-        if field
-          item["description"] = field.as(XML::Node).text.as(String)
-        end
-
-        field = c.xpath_node("guid")
-        if field
-          item["guid"] = field.as(XML::Node).text.as(String)
-        end
-
-        field = c.children.find { |c| c.name == "creator" }.try &.content
-        if field
-          item["creator"] = field
-        end
-
-        item
-      }
+        Item.new(data)
+      end
     end
   end
 end
