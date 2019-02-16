@@ -17,7 +17,10 @@ dependencies:
 ```crystal
 require "rss_feed"
 
-RSSFeeder::Feed.new("url", refresh_interval: 5) do |item|
+# refresh_interval is a Timespan
+# This means you can use something like 5.seconds, 5.minutes, etc.
+
+RSSFeeder::Feed.listen("url", refresh_interval: 5.seconds) do |item|
   puts item.title
 end
 ```
